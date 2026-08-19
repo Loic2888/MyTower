@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+html,
+body,
+#app {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #020617; /* slate-950 */
+  color-scheme: dark;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Les lueurs d'ambiance (AmbientGlow.svelte) restent statiques : les animer
+ * en continu forçait WebKitGTK à recomposer aussi le flou de tous les
+ * panneaux vitrés (backdrop-blur) au-dessus à chaque frame — très coûteux
+ * en rendu logiciel (pas de GPU dédié sur la cible), et ça faisait ramer
+ * toute l'UI (saisie, survol) en plus de concurrencer Ollama pour le CPU. */

@@ -1,0 +1,27 @@
+# Dépendances / build front
+node_modules
+dist
+dist-ssr
+*.local
+
+# Rust / Tauri
+src-tauri/target/
+src-tauri/gen/schemas
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Éditeur / OS
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+
+# Secrets locaux
+.env
+.env.local
+
+# Contenu téléchargé (ex : .zim Kiwix) — jamais versionné
+data/

@@ -1,0 +1,38 @@
+{
+  "category": "Wikipedia hors ligne (Kiwix)",
+  "note": "Fichiers .zim officiels, servis en local par le conteneur kiwix une fois téléchargés. Aucun petit fichier Wikipedia en français n'existe (le plus petit fait 3,3 Go) — les options françaises sont plus lourdes, c'est réel, pas une limite de l'app.",
+  "entries": [
+    {
+      "id": "wikipedia-en-100-mini",
+      "title": "Wikipedia — 100 articles clés (EN)",
+      "description": "Démo ultra-rapide pour tester le mécanisme de téléchargement.",
+      "url": "https://lb.download.kiwix.org/zim/wikipedia/wikipedia_en_100_mini_2026-04.zim",
+      "filename": "wikipedia_en_100_mini_2026-04.zim",
+      "sizeLabel": "4,4 Mo"
+    },
+    {
+      "id": "wikipedia-en-top-mini",
+      "title": "Wikipedia — articles les plus consultés (EN)",
+      "description": "Bonne couverture généraliste sans prendre trop de place.",
+      "url": "https://lb.download.kiwix.org/zim/wikipedia/wikipedia_en_top_mini_2026-03.zim",
+      "filename": "wikipedia_en_top_mini_2026-03.zim",
+      "sizeLabel": "315 Mo"
+    },
+    {
+      "id": "wiktionary-en-simple",
+      "title": "Wiktionnaire simplifié (EN)",
+      "description": "Dictionnaire anglais simplifié, très léger.",
+      "url": "https://lb.download.kiwix.org/zim/wiktionary/wiktionary_en-simple_all_nopic_2026-07.zim",
+      "filename": "wiktionary_en-simple_all_nopic_2026-07.zim",
+      "sizeLabel": "25 Mo"
+    },
+    {
+      "id": "wiktionary-fr",
+      "title": "Wiktionnaire complet (FR)",
+      "description": "Dictionnaire français complet.",
+      "url": "https://lb.download.kiwix.org/zim/wiktionary/wiktionary_fr_all_nopic_2026-05.zim",
+      "filename": "wiktionary_fr_all_nopic_2026-05.zim",
+      "sizeLabel": "4,6 Go"
+    }
+  ]
+}

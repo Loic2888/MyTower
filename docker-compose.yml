@@ -1,0 +1,72 @@
+# Squelette d'orchestration — voir "Séquencement du développement" dans CLAUDE.md.
+# Aucun de ces services n'est encore câblé à l'app à l'étape 1 (front vide).
+# Un service = un conteneur ; ne pas faire tourner un service critique hors
+# Docker "pour tester vite" (cf. CLAUDE.md, Stack canonique).
+#
+# Les ports sont surchargeables via .env (voir .env.example) — valeurs par
+# défaut fournies pour que `docker compose up` fonctionne sans .env.
+
+services:
+  # Étape 2 : chat IA / LLM local. Modèle par défaut Qwen3.5/3.6 (4b pour
+  # itérer, monter à 8b/14b seulement si la qualité RAG/tool-calling l'exige).
+  ollama:
+    image: ollama/ollama:latest
+    volumes:
+      - ollama-data:/root/.ollama
+    ports:
+      - "${OLLAMA_PORT:-11434}:11434"
+
+  # Étape 2/3 : vector store RAG (fenêtre glissante 30 jours, cf. CLAUDE.md
+  # "Mémoire RAG"). Embeddings via nomic-embed-text (servi par Ollama).
+  qdrant:
+    image: qdrant/qdrant:latest
+    volumes:
+      - qdrant-data:/qdrant/storage
+    ports:
+      - "${QDRANT_PORT:-6333}:6333"
+
+  # Étape 3 : académie (contenu type Khan Academy). Le volume DOIT pointer
+  # sur /kolibri (pas /kolibrihome) — le conteneur refuse de démarrer sans
+  # ce montage. Port 8081 obligatoire aussi : c'est le serveur de contenu
+  # zip, sans lui certains cours ne se chargent pas.
+  kolibri:
+    image: learningequality/kolibri:latest
+    volumes:
+      - kolibri-data:/kolibri
+    ports:
+      - "${KOLIBRI_PORT:-8080}:8080"
+      - "${KOLIBRI_ZIP_PORT:-8081}:8081"
+
+  # Étape 3 : cartes offline (tuiles OSM). Image/tuiles à définir avec les
+  # données ProtoMaps une fois cette étape démarrée — PAS ENCORE RECHERCHÉ,
+  # cette image n'existe probablement pas (cf. l'erreur `pull access denied`
+  # rencontrée avec `protomaps/pmtiles-server`). Ne pas lancer `docker
+  # compose up` sans argument tant que ce n'est pas corrigé.
+  protomaps:
+    image: protomaps/pmtiles-server:latest
+    volumes:
+      - protomaps-data:/data
+    ports:
+      - "${PROTOMAPS_PORT:-8090}:8090"
+
+  # Dossier "collections" façon NOMAD (docs/decisions/0003) : Wikipedia/
+  # Wiktionnaire hors ligne au format .zim, servis localement une fois
+  # téléchargés via l'outil "Contenus" du wizard. Bind-mount (pas un volume
+  # nommé) : le backend Rust doit pouvoir écrire directement dedans.
+  kiwix:
+    image: ghcr.io/kiwix/kiwix-serve:latest
+    command: ["*.zim"]
+    volumes:
+      - ./data/kiwix:/data
+    ports:
+      - "${KIWIX_PORT:-8082}:8080"
+
+  # Le chat P2P (Reticulum/LXMF) et la salle de jeux (émulateurs + échecs via
+  # python-chess/Stockfish) seront ajoutés ici quand leur étape du
+  # séquencement démarrera.
+
+volumes:
+  ollama-data:
+  qdrant-data:
+  kolibri-data:
+  protomaps-data:
